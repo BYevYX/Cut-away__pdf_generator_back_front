@@ -12,8 +12,8 @@ const FileDropzone: FC = () => {
     <div 
       className='downloadPdfContainer'
     >
-        {true ? 
-        <a href={"pdfUrl"} download='result.pdf' title='result.pdf' className='downloadPdf'>
+        {pdfUrl ? 
+        <a href={pdfUrl} download='result.pdf' title='result.pdf' className='downloadPdf'>
             Скачать файл
         </a>
         : 'Здесь можно будет скачать файл с визитками'
