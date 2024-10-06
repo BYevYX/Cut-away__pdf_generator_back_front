@@ -4,8 +4,3 @@ export enum cardStateName {
      rightMargin = "rightMargin",
      bottomMargin = "bottomMargin",
 }
-
-export enum cardSide {
-    front = 'front',
-    back = 'back',
-}

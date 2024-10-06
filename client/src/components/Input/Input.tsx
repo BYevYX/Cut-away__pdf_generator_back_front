@@ -1,20 +1,22 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { FC } from "react";
 
 import { cardStateName } from "../commonTypes";
 import { changeCardState } from "../../Redux/features/cardSize/cardSizeSlice";
 
 import './Input.css';
+import { makeSelectCardParametr } from "../../Redux/features/cardSize/selectors";
 
 interface props {
     stateName: cardStateName;
     labelText: string;
     type?: string;
 }
-// TODO доставать value из стейта
+
 const Input: FC<props> = ({ stateName, labelText, type = "number" }) => {
     const dispatch = useDispatch();
+    const value = useSelector(makeSelectCardParametr(stateName));
 
     const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         dispatch(changeCardState({
@@ -29,7 +31,7 @@ const Input: FC<props> = ({ stateName, labelText, type = "number" }) => {
             <input
                 className="input"
                 type={type}
-                // value={value}
+                placeholder={String(value)}
                 onChange={changeHandler}
             />
         </div>

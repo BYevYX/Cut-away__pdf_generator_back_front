@@ -1,0 +1,22 @@
+.downloadPdfContainer {
+    text-align: center;
+}
+
+.downloadPdf {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(0, 168, 0);
+    padding: 4px 16px;
+    margin: 8px;
+    text-align: center;
+    color: white;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.downloadPdf:hover {
+    background-color: green;
+}

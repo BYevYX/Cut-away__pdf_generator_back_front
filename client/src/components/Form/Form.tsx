@@ -1,30 +1,65 @@
-import React from "react";
 import type { FC } from "react";
 import Input from "../Input";
 
 import './Form.css';
-import { cardSide, cardStateName } from "../commonTypes";
+import { cardStateName } from "../commonTypes";
 import FileInput from "../FileInput/FileInput";
+import Select from "../Select/Select";
+import FormBlock from "../FormBlock/FormBlock";
+import DowloadPdf from "../DownloadPdf/DowloadPdf";
+import { useDispatch, useSelector } from "react-redux";
+import { selectFiles } from "../../Redux/features/fileSlice/selectors";
+import { selectPaperFormat } from "../../Redux/features/paperFormatSlice/selectors";
+import { selectCardSize } from "../../Redux/features/cardSize/selectors";
+import axios from "axios";
+import { addPdfURL } from "../../Redux/features/downloadPdfSlice/downloadPdf";
 
 const Form: FC = () => {
+    const files = useSelector(selectFiles);
+    const paperFormat = useSelector(selectPaperFormat);
+    const { width, height, rightMargin, bottomMargin } = useSelector(selectCardSize);
 
-    // TODO: добавить селекторы
+    const dispatch = useDispatch();
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+    
+        if (!files.length) {
+          alert('Пожалуйста, загрузите лицевые и оборотные файлы.'); // TODO сделать нотификашку
+          return;
+        }
+    
+        const formData = new FormData();
+        // Добавляем параметры заказа
+        formData.append('paperSize', paperFormat);
+        formData.append('cardWidth', width.toString());
+        formData.append('cardHeight', height.toString());
+        formData.append('cardRightMargin', rightMargin.toString());
+        formData.append('cardBottomMargin', bottomMargin.toString());
+    
+        // Добавляем файлы
+        Array.from(files).forEach((file) => formData.append('frontFiles', file));
+    
+        try {
+            // Отправляем запрос на сервер
+            const response = await axios.post('/generate-pdf', formData, {
+                responseType: 'blob', // Ожидаем файл PDF в ответе
+            });
+        
+            // Создаем ссылку для скачивания PDF
+            const pdfURL = window.URL.createObjectURL(new Blob([response.data])).toString();
+            dispatch(addPdfURL({ pdfURL }));
+            } catch (error) {
+                console.error("Произошла ошибка при генерации PDF:", error);
+                alert('Что-то пошло не так, попробуйте еще раз');
+            }
+      };
 
     return (
-        <section className="container">
-            <form className="form" onSubmit={() => "handleSubmit"}>
-                <div className="form-group">
-                <label>Формат бумаги: </label>
-                    <select value={"paperSize"} onChange={(e) => null}>
-                        <option value="A5">A5</option>
-                        <option value="A4">A4</option>
-                        <option value="A3">A3</option>
-                        <option value="A2">A2</option>
-                        <option value="A1">A1</option>
-                        <option value="A0">A0</option>
-                    </select>
-                </div>
-                <div className="form-group">
+        <form className="form" onSubmit={() => "handleSubmit"}>
+            <div className="main-form-group" >
+                <FormBlock>
+                    <Select />
                     <Input 
                         stateName={cardStateName.width}
                         labelText="Ширина визитки (мм): "
@@ -38,18 +73,24 @@ const Form: FC = () => {
                         labelText="Отступ между визитками сбоку: "
                     />
                     <Input 
-                        stateName={cardStateName.rightMargin}
+                        stateName={cardStateName.bottomMargin}
                         labelText="Отступ между визитками снизу: "
                     />
-                </div>
-                <div className="form-files-group">
-                    <FileInput type={cardSide.front} />
-                    <FileInput type={cardSide.back} />
-                </div>
+                </FormBlock>
+                <div>
+                    <FormBlock className="form-input-files" >
+                        <FileInput text="Выберите файлы" />
+                    </FormBlock>
 
-                <button className="submit-button" type="submit">Сгенерировать PDF</button>
-            </form>
-        </section>
+                    <FormBlock className="download-pdf-files" >
+                        <DowloadPdf />
+                    </FormBlock>
+                </div>
+            </div>
+            <div className="submit-button-container">
+                <button className="submit-button" type="submit" onSubmit={handleSubmit}>Сгенерировать PDF</button>
+            </div>
+        </form>
     );
 };
 

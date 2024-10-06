@@ -5,6 +5,10 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App/App';
 import reportWebVitals from './reportWebVitals';
+import { enableMapSet } from 'immer';
+
+// Включаем поддержку Map и Set
+enableMapSet();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -1,0 +1,11 @@
+.triangle {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 400px;
+    height: 400px;
+    background-image: url('\image.png');
+    background-size: cover;
+    background-color: black;
+    clip-path: polygon(100% 10%, 0% 100%, 100% 100%);
+}

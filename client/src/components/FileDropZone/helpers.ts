@@ -1,5 +1,5 @@
-export const checkFiles = (files: FileList): [string[], File[]] => {
-    const MAX_FILE_COUNT = 5
+export const checkFiles = (files: FileList, allFilesCount: number): [string[], File[]] => {
+    const MAX_FILE_COUNT = 2;
     const MAX_FILE_SIZE_MB = 5; // Максимальный размер каждого файла
     const MAX_TOTAL_SIZE_MB = 50; // Максимальный размер всех загрузок
 
@@ -12,7 +12,7 @@ export const checkFiles = (files: FileList): [string[], File[]] => {
         return toReturn;
     }
 
-    if (files.length > MAX_FILE_COUNT) {
+    if (allFilesCount + files.length > MAX_FILE_COUNT) {
         errorMessages.push(`Фалов слишком много. Максимальное количество файлов ${MAX_FILE_COUNT}`);
         return toReturn;
     }
