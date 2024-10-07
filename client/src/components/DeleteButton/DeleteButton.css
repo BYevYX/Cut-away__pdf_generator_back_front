@@ -1,14 +1,14 @@
 .deleteFileButton {
-    margin-left: 8px;
-    margin-bottom: 4px;
-    height: fit-content;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: rgb(255, 66, 66);
-    transition: background-color 0.3s ease;
+	margin-left: 8px;
+	margin-bottom: 4px;
+	height: fit-content;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	background-color: rgb(255, 66, 66);
+	transition: background-color 0.3s ease;
 }
 
 .deleteFileButton:hover {
-    background-color: rgb(211, 28, 28);
+	background-color: rgb(211, 28, 28);
 }

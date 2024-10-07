@@ -1,16 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { PaperSize } from "../../../App/App.types";
+import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
+
+import { PaperSize } from '../../../App/App.types';
 
 interface paperFormatState {
     format: PaperSize;
 }
 
-interface changeFormatPayload  extends paperFormatState{}
+type changeFormatPayload = paperFormatState;
 
 const initialState: paperFormatState = {
     format: PaperSize.A4,
-}
+};
 
 const paperFormatSlice = createSlice({
     name: 'paperFormat',
@@ -19,8 +20,8 @@ const paperFormatSlice = createSlice({
         changeFormat(state, action: PayloadAction<changeFormatPayload>) {
             const format = action.payload.format;
             state.format = format;
-        }
-    }
+        },
+    },
 });
 
 const paperFormatReducer = paperFormatSlice.reducer;

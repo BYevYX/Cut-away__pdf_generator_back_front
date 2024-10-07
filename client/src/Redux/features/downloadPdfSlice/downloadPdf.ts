@@ -1,17 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 interface downloadPdfState {
     pdfURL: string | null;
 }
 
 interface addPdfURLPayload {
-    pdfURL: string,
+    pdfURL: string;
 }
 
 const initialState: downloadPdfState = {
     pdfURL: null,
-}
+};
 
 const downloadPdfSlice = createSlice({
     name: 'downloadPdf',
@@ -20,8 +20,8 @@ const downloadPdfSlice = createSlice({
         addPdfURL(state, action: PayloadAction<addPdfURLPayload>) {
             const pdfURL = action.payload.pdfURL;
             state.pdfURL = pdfURL;
-        }
-    }
+        },
+    },
 });
 
 const downloadPdfReducer = downloadPdfSlice.reducer;

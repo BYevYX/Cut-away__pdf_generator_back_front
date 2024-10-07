@@ -1,20 +1,12 @@
-import React from "react";
-import { FC } from "react";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { FC } from 'react';
 
 import './CodeTriangle.css';
 
-interface props {
+type props = object;
 
-}
-
-const CodeTriangle: FC<props> = ({  }) => {
-
-    return (
-        <div className="triangle">
-
-        </div>
-    );
-}
+const CodeTriangle: FC<props> = () => {
+    return <div className="triangle"></div>;
+};
 
 export default CodeTriangle;

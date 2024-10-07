@@ -1,4 +1,7 @@
-export const checkFiles = (files: FileList, allFilesCount: number): [string[], File[]] => {
+export const checkFiles = (
+    files: FileList,
+    allFilesCount: number
+): [string[], File[]] => {
     const MAX_FILE_COUNT = 2;
     const MAX_FILE_SIZE_MB = 5; // Максимальный размер каждого файла
     const MAX_TOTAL_SIZE_MB = 50; // Максимальный размер всех загрузок
@@ -13,10 +16,11 @@ export const checkFiles = (files: FileList, allFilesCount: number): [string[], F
     }
 
     if (allFilesCount + files.length > MAX_FILE_COUNT) {
-        errorMessages.push(`Фалов слишком много. Максимальное количество файлов ${MAX_FILE_COUNT}`);
+        errorMessages.push(
+            `Фалов слишком много. Максимальное количество файлов ${MAX_FILE_COUNT}`
+        );
         return toReturn;
     }
-    
 
     for (const file of Array.from(files)) {
         const fileSizeMB = file.size / (1024 * 1024); // Размер файла в MB
@@ -24,13 +28,17 @@ export const checkFiles = (files: FileList, allFilesCount: number): [string[], F
 
         // Проверяем, если любой файл больше разрешенного размера
         if (fileSizeMB > MAX_FILE_SIZE_MB) {
-            errorMessages.push(`Файл ${file.name} слишком большой. Максимальный размер: ${MAX_FILE_SIZE_MB}MB.`);
+            errorMessages.push(
+                `Файл ${file.name} слишком большой. Максимальный размер: ${MAX_FILE_SIZE_MB}MB.`
+            );
             continue;
         }
 
         // Проверяем совокупный размер файлов
         if (allSize > MAX_TOTAL_SIZE_MB) {
-            errorMessages.push(`Всего файлов слишком много. Максимальный общий размер: ${MAX_TOTAL_SIZE_MB}MB.`);
+            errorMessages.push(
+                `Всего файлов слишком много. Максимальный общий размер: ${MAX_TOTAL_SIZE_MB}MB.`
+            );
             break;
         }
 
@@ -39,5 +47,4 @@ export const checkFiles = (files: FileList, allFilesCount: number): [string[], F
     }
 
     return toReturn;
-}
-
+};

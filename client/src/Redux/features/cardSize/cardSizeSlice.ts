@@ -1,10 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { cardStateName } from "../../../components/commonTypes";
+import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
+
+import { cardStateName } from '../../../components/commonTypes';
 
 interface payload {
     name: cardStateName;
-    newState: number,
+    newState: number;
 }
 
 const initialState = {
@@ -12,7 +13,7 @@ const initialState = {
     height: 50,
     rightMargin: 0,
     bottomMargin: 0,
-}
+};
 
 const cardSize = createSlice({
     name: 'cardSize',
@@ -22,7 +23,7 @@ const cardSize = createSlice({
             const stateName = action.payload.name;
             state[stateName] = action.payload.newState;
         },
-    }
+    },
 });
 
 const cardSizeReducer = cardSize.reducer;

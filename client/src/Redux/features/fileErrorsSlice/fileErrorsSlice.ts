@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 interface FilesErrorsState {
     errorsList: Set<string>;
@@ -13,10 +13,9 @@ interface deletePayload {
     errorToDelete: string;
 }
 
-
 const initialState: FilesErrorsState = {
     errorsList: new Set<string>(),
-}
+};
 
 const filesErrorsSlice = createSlice({
     name: 'filesErrors',
@@ -34,11 +33,12 @@ const filesErrorsSlice = createSlice({
         deleteAllErrors(state) {
             state.errorsList.clear();
         },
-    }
+    },
 });
 
-const filesErrorsReducer = filesErrorsSlice.reducer
+const filesErrorsReducer = filesErrorsSlice.reducer;
 
-export const {addErrors, deleteError, deleteAllErrors} = filesErrorsSlice.actions;
+export const { addErrors, deleteError, deleteAllErrors } =
+    filesErrorsSlice.actions;
 
 export default filesErrorsReducer;

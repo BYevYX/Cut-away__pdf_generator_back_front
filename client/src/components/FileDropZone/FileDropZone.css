@@ -1,18 +1,18 @@
 .file-drop-zone {
-    cursor: grab;
-    width: 100%;
-    height: 100px;
-    box-sizing: border-box;
-    border: 2px dashed #888;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    text-align: center;
+	cursor: grab;
+	width: 100%;
+	height: 100px;
+	box-sizing: border-box;
+	border: 2px dashed #888;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 20px;
+	background-color: #f9f9f9;
+	text-align: center;
 }
 
 .file-drop-zone:active {
-    cursor: grabbing;
+	cursor: grabbing;
 }
