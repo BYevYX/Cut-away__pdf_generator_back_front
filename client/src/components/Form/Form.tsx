@@ -26,8 +26,8 @@ const Form: FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!files.length) {
-            alert('Пожалуйста, загрузите лицевые и оборотные файлы.'); // TODO сделать нотификашку
+        if (!files.length || files.length !== 2) {
+            alert('Пожалуйста, загрузите два zip файла (лицевой и оборотный).'); // TODO сделать нотификашку
             return;
         }
 
@@ -40,21 +40,23 @@ const Form: FC = () => {
         formData.append('cardBottomMargin', bottomMargin.toString());
 
         // Добавляем файлы
-        Array.from(files).forEach((file) =>
-            formData.append('frontFiles', file)
-        );
+        Array.from(files).forEach((file) => formData.append('files', file));
 
         try {
             // Отправляем запрос на сервер
-            const response = await axios.post('/generate-pdf', formData, {
-                responseType: 'blob', // Ожидаем файл PDF в ответе
+            const response = await axios.post('http://localhost:5000/pdf/generate-pdf', formData, {
+                responseType: 'json',
             });
+            console.log('PDF сгенерирован:', response);
 
             // Создаем ссылку для скачивания PDF
-            const pdfURL = window.URL.createObjectURL(
-                new Blob([response.data])
-            ).toString();
-            dispatch(addPdfURL({ pdfURL }));
+            if (response.data && response.data.downloadUrl) {
+                const pdfURL = response.data.downloadUrl;
+                // Делаем PDF доступным для скачивания
+                dispatch(addPdfURL({ pdfURL }));
+            } else {
+                alert('Не удалось получить URL для скачивания PDF.');
+            }
         } catch (error) {
             console.error('Произошла ошибка при генерации PDF:', error);
             alert('Что-то пошло не так, попробуйте еще раз');
@@ -62,7 +64,7 @@ const Form: FC = () => {
     };
 
     return (
-        <form className="form" onSubmit={() => 'handleSubmit'}>
+        <form className="form" onSubmit={handleSubmit}>
             <div className="main-form-group">
                 <FormBlock>
                     <Select />
@@ -94,11 +96,7 @@ const Form: FC = () => {
                 </div>
             </div>
             <div className="submit-button-container">
-                <button
-                    className="submit-button"
-                    type="submit"
-                    onSubmit={handleSubmit}
-                >
+                <button className="submit-button" type="submit">
                     Сгенерировать PDF
                 </button>
             </div>
