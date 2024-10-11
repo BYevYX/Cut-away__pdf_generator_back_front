@@ -44,9 +44,13 @@ const Form: FC = () => {
 
         try {
             // Отправляем запрос на сервер
-            const response = await axios.post('http://localhost:5000/pdf/generate-pdf', formData, {
-                responseType: 'json',
-            });
+            const response = await axios.post(
+                'http://localhost:5000/pdf/generate-pdf',
+                formData,
+                {
+                    responseType: 'json',
+                }
+            );
             console.log('PDF сгенерирован:', response);
 
             // Создаем ссылку для скачивания PDF
