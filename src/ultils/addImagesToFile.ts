@@ -15,12 +15,21 @@ const addImagesToFile = (
 
     imagesPositions.forEach(async (imagePosition) => {
         const { x, y, width, height } = imagePosition;
+        const cutMargin = 3;
 
         if (options.paperWidthForReverse) {
             const paperWidth = options.paperWidthForReverse;
-            doc.image(cur.value, paperWidth - x - width, y, { width, height });
+            const reverseX = paperWidth - x - width;
+
+            doc.rect(reverseX, y, width, height).stroke();
+            doc.rect(reverseX - cutMargin, y - cutMargin, width + cutMargin * 2, height + cutMargin * 2).stroke();
+
+            doc.image(cur.value, reverseX, y, { width, height });
         } else {
-            doc.image(cur.value, x, y, { width, height,  });
+            doc.rect(x, y, width, height).stroke();
+            doc.rect(x - cutMargin, y - cutMargin, width + cutMargin * 2, height + cutMargin * 2).stroke();
+
+            doc.image(cur.value, x, y, { width, height });
         }
         cur = cur.next!;
     })

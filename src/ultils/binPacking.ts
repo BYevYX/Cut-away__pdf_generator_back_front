@@ -43,18 +43,25 @@ export default class BinPacking {
         let cards: Card[] = [];
 
         let x = 0, y = 0;
-        while (y < this.paperHeight) {
+        const cutMargin = 3;
+        let horizontalCenter: number = 0, verticalCenter: number = 0;
+
+        while (y + width < this.paperHeight + 30) {
             if (x + width > this.paperWidth) {
-                y += height + this.cardBottomMargin;
+                y += height + this.cardBottomMargin + cutMargin * 2;
+                horizontalCenter = (this.paperWidth - x) / 2 + cutMargin;
                 x = 0;
                 continue;
             }
 
             cards.push({ x, y, width, height });
-            x += width + this.cardRightMargin;
+            x += width + this.cardRightMargin + cutMargin * 2;
             ++count;
         }
-        
+
+        verticalCenter = (this.paperHeight - y) > 0 ? (this.paperHeight - y) / 2 : 0;
+        cards = cards.map(card => ({ ...card, y: card.y + verticalCenter, x: card.x + horizontalCenter }));
+
         if (count > this.cards.length) {
             this.cards = cards;
             this.isRotate = options.needRotate;
